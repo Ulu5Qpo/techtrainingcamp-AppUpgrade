@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"techtrainingcamp-appUpgrade-team4/service"
 	"techtrainingcamp-appUpgrade-team4/utils"
+	"text/template"
 )
 
 func main() {
@@ -25,15 +27,23 @@ func main() {
 
 	//登录界面
 	r.GET("/login", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login.html", gin.H{})
+		w := c.Writer
+		t := template.Must(template.ParseFiles("views/login.html"))
+		t.Execute(w, "")
 	})
+
+	//登出功能
+	r.GET("/logout", service.Logout)
 
 	//这个就是检查是否是登录状态的大概代码 如果需要判断 可以按照这个写
 	r.GET("/haha", func(c *gin.Context) {
+		w := c.Writer
 		session := sessions.Default(c)
 		username := session.Get("user")
+		fmt.Println(username)
 		if username == nil {
-			c.HTML(http.StatusOK, "login.html", gin.H{})
+			t := template.Must(template.ParseFiles("views/login.html"))
+			t.Execute(w, "")
 		} else {
 			c.HTML(http.StatusOK, "hahaha.html", gin.H{})
 		}

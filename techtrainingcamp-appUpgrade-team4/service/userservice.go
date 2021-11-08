@@ -23,12 +23,23 @@ func Login(c *gin.Context) {
 		fmt.Println("success")
 
 		session := sessions.Default(c)
+		session.Options(sessions.Options{MaxAge: 60 * 60})
 		session.Set("user", username)
 		session.Save()
-		fmt.Println(session.Get("user"))
+
 
 	} else {
 		t := template.Must(template.ParseFiles("views/login.html"))
 		t.Execute(w, "用户名或密码错误")
 	}
+}
+
+func Logout(c *gin.Context) {
+	w := c.Writer
+
+	session := sessions.Default(c)
+	session.Clear()
+	session.Save()
+	t := template.Must(template.ParseFiles("views/login.html"))
+	t.Execute(w, "")
 }
