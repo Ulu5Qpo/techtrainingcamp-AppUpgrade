@@ -1,7 +1,4 @@
-FROM golang:alpine
-
-LABEL maintainer="Xuyuanteng <13883986114@163.com>"
-WORKDIR $GOPATH/src/gin_docker
-ENV GO111MODULE=on
-ENV GOPROXY="https://goproxy.io"
+FROM centos:7
+COPY techtrainingcamp-AppUpgrade /root/server
 EXPOSE 9090
+CMD /root/server
