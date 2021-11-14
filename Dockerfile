@@ -4,5 +4,4 @@ LABEL maintainer="Xuyuanteng <13883986114@163.com>"
 WORKDIR $GOPATH/src/gin_docker
 ENV GO111MODULE=on
 ENV GOPROXY="https://goproxy.io"
-EXPOSE 8080
-ENTRYPOINT  ["./gin_docker"]
+EXPOSE 9090
