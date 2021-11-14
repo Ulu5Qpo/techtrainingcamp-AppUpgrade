@@ -1,4 +1,9 @@
-FROM centos:7
-COPY techtrainingcamp-AppUpgrade /root/server
-EXPOSE 9090
-CMD /root/server
+FROM golang:1.17
+
+WORKDIR /go/src/app
+COPY . .
+
+RUN go get -d -v ./...
+RUN go install -v ./...
+
+CMD ["app"]
